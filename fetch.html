@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="boton">Carga Tablet</button>
+    <ol id="lista"></ol>
+    <script>
+        document.getElementById("boton").onclick = cargaTablet;
+
+        function cargaTablet() {
+            fetch('datos2.json')
+                .then(function(response) {
+                    if (!response.ok) {
+                        throw new Error('No se pudo cargar el archivo JSON.');
+                    }
+                    return response.json(); // Convertimos la respuesta a JSON
+                })
+                .then(function(data) {
+
+                    
+                    // La variable "data" ahora contiene el objeto JavaScript
+                    //console.log(data);
+
+                    // Accedemos a las propiedades del objeto y creamos un elemento de lista para cada uno
+                    let miLista = document.getElementById("lista");
+                    let liModelo= document.createElement("li");
+                    let liColor = document.createElement("li");
+                    let liAlmacenamiento = document.createElement("li");
+                    let liRam = document.createElement("li");
+                    let liValoraciones = document.createElement("li");
+                    let liFecha = document.createElement("li");
+
+                    // Asignamos los valores de las propiedades a los elementos de lista
+                    liModelo.textContent = "Modelo: " + data.modelo;
+                    liColor.textContent = "Color: " + data.color;
+                    liAlmacenamiento.textContent = "Almacenamiento: " + data.almacenamiento;
+                    liRam.textContent = "RAM: " + data.ram;
+                    liValoraciones.textContent = "Valoracion: " + data.valoraciones;
+                    liFecha.textContent = "Reseña: " + data.fecha;
+
+                    // Agregamos los elementos de lista a la lista ordenada
+                    miLista.appendChild(liModelo);
+                    miLista.appendChild(liColor);
+                    miLista.appendChild(liAlmacenamiento);
+                    miLista.appendChild(liRam);
+                    miLista.appendChild(liValoraciones);
+                    miLista.appendChild(liFecha);
+
+                    // Mostramos los valores en alertas
+                    alert("Nombre: " + data.modelo);
+                    alert("Color: " + data.color);
+                    alert("Almacenamiento: " + data.almacenamiento);
+                    alert("RAM: " + data.ram);
+                    alert("Valoracion: " + data.valoraciones);
+                    alert("Fecha: " + data.fecha);
+
+                    // Aquí puedes realizar cualquier operación que necesites con los datos del archivo JSON
+                })
+                .catch(function(error) {
+                    console.error('Se produjo un error al cargar el archivo JSON:', error);
+                });
+        }
+    </script>
+</body>
+</html>
